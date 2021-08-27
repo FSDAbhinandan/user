@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +28,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@PostMapping("/signup")
 	public ResponseEntity<User> createUser(@RequestBody User user) throws UserIsAlreadyPresentException {
 		
 		Set<UserRole> roles = new HashSet<UserRole>();
+		
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		
 		
 		Role role = new Role();
 		role.setRoleId(45);

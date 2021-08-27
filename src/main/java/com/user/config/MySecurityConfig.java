@@ -31,10 +31,15 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
+//	
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return NoOpPasswordEncoder.getInstance();
+//	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
 	
